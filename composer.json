@@ -1,0 +1,49 @@
+{
+    "name": "reinvanoyen/copia-mollie",
+    "description": "Mollie Payments for Laravel Copia",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "payment",
+        "copia",
+        "shop",
+        "ecommerce"
+    ],
+    "authors": [
+        {
+            "name": "Rein Van Oyen",
+            "email": "reinvanoyen@gmail.com",
+            "homepage": "https://reinvanoyen.be",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4|^8.0",
+        "mollie/mollie-api-php": "^2.48"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^7.11"
+    },
+    "autoload": {
+        "psr-4": {
+            "ReinVanOyen\\CopiaMollie\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ReinVanOyen\\CopiaMollie\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ReinVanOyen\\CopiaMollie\\CopiaMollieServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/phpunit -c phpunit.xml"
+        ]
+    }
+}
