@@ -4,6 +4,7 @@ namespace ReinVanOyen\CopiaMollie;
 
 use Illuminate\Support\ServiceProvider;
 use Mollie\Api\MollieApiClient;
+use ReinVanOyen\CopiaMollie\Contracts\OrderDescriber;
 
 class CopiaMollieServiceProvider extends ServiceProvider
 {
@@ -14,6 +15,8 @@ class CopiaMollieServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->app->bind(OrderDescriber::class, config('copia-mollie.order_describer'));
+
         $this->app->bind(MollieApiClient::class, function () {
             $mollie = new MollieApiClient();
             $mollie->setApiKey(config('copia-mollie.mollie_api_key'));

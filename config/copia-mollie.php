@@ -25,4 +25,15 @@ return [
     */
 
     'redirect_path' => 'redirect',
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order describer class
+    |--------------------------------------------------------------------------
+    |
+    | The class responsible for generating the description for an order.
+    | This description will be visible on the Mollie dashboard.
+    |
+    */
+    'order_describer' => \ReinVanOyen\CopiaMollie\Order\DefaultOrderDescriber::class,
 ];

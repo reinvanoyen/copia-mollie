@@ -6,6 +6,7 @@ use Mollie\Api\MollieApiClient;
 use ReinVanOyen\Copia\Contracts\Orderable;
 use ReinVanOyen\Copia\Contracts\Payment;
 use ReinVanOyen\Copia\Payment\PaymentStatus;
+use ReinVanOyen\CopiaMollie\Contracts\OrderDescriber;
 
 class MolliePayment implements Payment
 {
@@ -15,11 +16,17 @@ class MolliePayment implements Payment
     private MollieApiClient $mollie;
 
     /**
+     * @var OrderDescriber $orderDescriber
+     */
+    private OrderDescriber $orderDescriber;
+
+    /**
      * @param MollieApiClient $mollie
      */
-    public function __construct(MollieApiClient $mollie)
+    public function __construct(MollieApiClient $mollie, OrderDescriber $orderDescriber)
     {
         $this->mollie = $mollie;
+        $this->orderDescriber = $orderDescriber;
     }
 
     /**
@@ -43,7 +50,7 @@ class MolliePayment implements Payment
                 'currency' => 'EUR',
                 'value' => $total,
             ],
-            'description' => $order->getOrderId(),
+            'description' => $this->orderDescriber->describe($order),
             'redirectUrl' => url(config('copia-mollie.redirect_path').'?order='.$order->getOrderId()),
             'webhookUrl'  => url('copia-mollie-webhook'),
         ]);
