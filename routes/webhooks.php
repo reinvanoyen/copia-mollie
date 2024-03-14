@@ -2,4 +2,4 @@
 
 use \ReinVanOyen\CopiaMollie\Http\Controllers\WebhookController;
 
-Route::post('copia-mollie-webhook/', [WebhookController::class, 'handle']);
+Route::post(config('copia-mollie.webhook_path'), [WebhookController::class, 'handle']);

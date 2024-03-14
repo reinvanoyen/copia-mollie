@@ -5,6 +5,7 @@ namespace ReinVanOyen\CopiaMollie;
 use Illuminate\Support\ServiceProvider;
 use Mollie\Api\MollieApiClient;
 use ReinVanOyen\CopiaMollie\Contracts\OrderDescriber;
+use ReinVanOyen\CopiaMollie\Payment\MolliePayment;
 
 class CopiaMollieServiceProvider extends ServiceProvider
 {
@@ -22,6 +23,10 @@ class CopiaMollieServiceProvider extends ServiceProvider
             $mollie->setApiKey(config('copia-mollie.mollie_api_key'));
             return $mollie;
         });
+
+        $this->app->when(MolliePayment::class)
+            ->needs('$webhookPath')
+            ->give(config('copia-mollie.webhook_path'));
     }
 
     /**

@@ -25,6 +25,16 @@ return [
     */
 
     'redirect_path' => 'redirect',
+    /*
+    |--------------------------------------------------------------------------
+    | Webhook path
+    |--------------------------------------------------------------------------
+    |
+    | The webhook path Mollie will request when the status of the payment
+    | changes
+    |
+    */
+    'webhook_path' => 'copia-mollie-webhook',
 
     /*
     |--------------------------------------------------------------------------

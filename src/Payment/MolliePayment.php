@@ -21,12 +21,20 @@ class MolliePayment implements Payment
     private OrderDescriber $orderDescriber;
 
     /**
-     * @param MollieApiClient $mollie
+     * @var string $webhookPath
      */
-    public function __construct(MollieApiClient $mollie, OrderDescriber $orderDescriber)
+    private string $webhookPath;
+
+    /**
+     * @param MollieApiClient $mollie
+     * @param OrderDescriber $orderDescriber
+     * @param string $webhookPath
+     */
+    public function __construct(MollieApiClient $mollie, OrderDescriber $orderDescriber, string $webhookPath)
     {
         $this->mollie = $mollie;
         $this->orderDescriber = $orderDescriber;
+        $this->webhookPath = $webhookPath;
     }
 
     /**
@@ -52,7 +60,7 @@ class MolliePayment implements Payment
             ],
             'description' => $this->orderDescriber->describe($order),
             'redirectUrl' => url(config('copia-mollie.redirect_path').'?order='.$order->getOrderId()),
-            'webhookUrl'  => url('copia-mollie-webhook'),
+            'webhookUrl'  => url($this->webhookPath),
         ]);
 
         // Store the Mollie payment id in the order
