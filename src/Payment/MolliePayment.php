@@ -39,24 +39,25 @@ class MolliePayment implements Payment
 
     /**
      * @param Orderable $order
-     * @return mixed|string|void|null
+     * @return mixed|string|null
      * @throws \Mollie\Api\Exceptions\ApiException
      */
     public function pay(Orderable $order)
     {
+        $total = $order->getTotal();
         // Format total price as a string (needed for Mollie)
-        $total = number_format($order->getTotal(), 2, '.', '');
+        $formattedTotal = number_format($total, 2, '.', '');
 
         if (! $total > 0) {
             $order->setPaymentStatus(PaymentStatus::PAID);
-            return;
+            return null;
         }
 
         // Create the Mollie payment
         $payment = $this->mollie->payments->create([
             'amount' => [
                 'currency' => 'EUR',
-                'value' => $total,
+                'value' => $formattedTotal,
             ],
             'description' => $this->orderDescriber->describe($order),
             'redirectUrl' => url(config('copia-mollie.redirect_path').'?order='.$order->getOrderId()),
